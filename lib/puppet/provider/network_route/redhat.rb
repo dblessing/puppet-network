@@ -38,7 +38,7 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         next
       end
 
-      route = line.split
+      route = line.split(' ', 6)
       if route.length < 4
         raise Puppet::Error, "Malformed redhat route file, cannot instantiate network_route resources"
       end
@@ -53,6 +53,7 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         new_route[:netmask] = '0.0.0.0'
         new_route[:gateway] = route[2]
         new_route[:interface] = route[4]
+        new_route[:additional_options] = route[5] if route[5]
       else
         # use the CIDR version of the target as :name
         network, netmask = route[0].split("/")
@@ -63,6 +64,7 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         new_route[:netmask] = netmask
         new_route[:gateway] = route[2]
         new_route[:interface] = route[4]
+        new_route[:additional_options] = route[5] if route[5]
       end
 
       routes << new_route
@@ -81,9 +83,9 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         raise Puppet::Error, "#{provider.name} does not have a #{prop}." if provider.send(prop).nil?
       end
       if provider.network == "default"
-        contents << "#{provider.network} via #{provider.gateway} dev #{provider.interface}\n"
+        contents << "#{provider.network} via #{provider.gateway} dev #{provider.interface} #{provider.additional_options}\n"
       else
-        contents << "#{provider.network}/#{provider.netmask} via #{provider.gateway} dev #{provider.interface}\n"
+        contents << "#{provider.network}/#{provider.netmask} via #{provider.gateway} dev #{provider.interface} #{provider.additional_options}\n"
       end
     end
     contents.join

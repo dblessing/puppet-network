@@ -61,4 +61,8 @@ Puppet::Type.newtype(:network_route) do
     isrequired
     desc "The interface to use for the route"
   end
+
+  newproperty(:additional_options) do
+    desc "Additional options to append to the route, such as a selector"
+  end
 end
