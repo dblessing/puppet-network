@@ -59,7 +59,7 @@ Puppet::Type.type(:network_rule).provide(:redhat) do
     contents << header
     # Build rules
     providers.sort_by(&:name).each do |provider|
-      [:action, :selector].each do |prop|
+      [:action, :selector, :interface].each do |prop|
         raise Puppet::Error, "#{provider.name} does not have a #{prop}." if provider.send(prop).nil?
       end
       contents << "#{provider.selector} #{provider.action}\n"
