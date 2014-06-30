@@ -25,7 +25,7 @@ Puppet::Type.newtype(:network_rule) do
       # This is basic checking. Since multiple selector values can be entered
       # back-to-back, this is not fool-proof. However, it's a reasonable effort.
       value.each do |sel|
-        unless sel =~ /^(not)?\s(from|to|tos|fwmark|dev|pref)\s/
+        unless sel =~ /^(not)?\s?(from|to|tos|fwmark|dev|pref)\s/
           raise ArgumentError, 
                 "#{self.class} selector requires valid rule selector " \
                 "syntax for each value in the array. See `ip rule` man " \
