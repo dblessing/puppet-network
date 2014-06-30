@@ -54,6 +54,7 @@ describe Puppet::Type.type(:network_route).provider(:routes) do
         :gateway    => '172.18.6.2',
         :interface  => 'vlan200',
         :options    => 'table 200'
+      )
     end
 
     let(:route2_provider) do
