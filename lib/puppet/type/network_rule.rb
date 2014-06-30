@@ -20,10 +20,7 @@ Puppet::Type.newtype(:network_rule) do
     desc "The rule selector"
 
     validate do |value|
-      unless value.is_a?(Array)
-        raise ArgumentError,
-              "#{self.class} requires an array for the selector property"
-      end
+      value = [ value ] unless value.is_a?(Array)
 
       # This is basic checking. Since multiple selector values can be entered
       # back-to-back, this is not fool-proof. However, it's a reasonable effort.
@@ -43,10 +40,7 @@ Puppet::Type.newtype(:network_rule) do
     desc "The rule action"
 
     validate do |value|
-      unless value.is_a?(Array)
-        raise ArgumentError,
-              "#{self.class} requires an array for the selector property"
-      end
+      value = [ value ] unless value.is_a?(Array)
 
       # This is basic checking. Since multiple action values can be entered
       # back-to-back, this is not fool-proof. However, it's a reasonable effort.
