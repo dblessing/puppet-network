@@ -19,7 +19,6 @@ Puppet::Type.type(:network_route).provide(:redhat) do
   has_feature :provider_option
 
   def select_file
-    return nil unless @resource[:interface]
     "/etc/sysconfig/network-scripts/route-#{@resource[:interface]}"
   end
 
