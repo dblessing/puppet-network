@@ -16,6 +16,8 @@ Puppet::Type.type(:network_route).provide(:redhat) do
   confine    :osfamily => :redhat
   defaultfor :osfamily => :redhat
 
+  has_feature :provider_option
+
   def select_file
     return nil unless @resource[:interface]
     "/etc/sysconfig/network-scripts/route-#{@resource[:interface]}"
@@ -53,7 +55,7 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         new_route[:netmask] = '0.0.0.0'
         new_route[:gateway] = route[2]
         new_route[:interface] = route[4]
-        new_route[:additional_options] = route[5] if route[5]
+        new_route[:options] = route[5] if route[5]
       else
         # use the CIDR version of the target as :name
         network, netmask = route[0].split("/")
@@ -64,7 +66,7 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         new_route[:netmask] = netmask
         new_route[:gateway] = route[2]
         new_route[:interface] = route[4]
-        new_route[:additional_options] = route[5] if route[5]
+        new_route[:options] = route[5] if route[5]
       end
 
       routes << new_route
@@ -83,9 +85,15 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         raise Puppet::Error, "#{provider.name} does not have a #{prop}." if provider.send(prop).nil?
       end
       if provider.network == "default"
+<<<<<<< HEAD
         contents << "#{provider.network} via #{provider.gateway} dev #{provider.interface} #{provider.additional_options}\n"
       else
         contents << "#{provider.network}/#{provider.netmask} via #{provider.gateway} dev #{provider.interface} #{provider.additional_options}\n"
+=======
+        contents << "#{provider.network} via #{provider.gateway} dev #{provider.interface} #{provider.options}\n"
+      else
+        contents << "#{provider.network}/#{provider.netmask} via #{provider.gateway} dev #{provider.interface} #{provider.options}\n"
+>>>>>>> Add additional option support
       end
     end
     contents.join

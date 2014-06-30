@@ -38,12 +38,12 @@ describe Puppet::Type.type(:network_route).provider(:redhat) do
 
       it "should parse out normal network routes" do
         data.find { |h| h[:name] == '172.17.67.0/30' }.should == {
-          :name               => '172.17.67.0/30',
-          :network            => '172.17.67.0',
-          :netmask            => '255.255.255.252',
-          :gateway            => '172.18.6.2',
-          :interface          => 'vlan200',
-          :additional_options => 'table 200',
+          :name       => '172.17.67.0/30',
+          :network    => '172.17.67.0',
+          :netmask    => '255.255.255.252',
+          :gateway    => '172.18.6.2',
+          :interface  => 'vlan200',
+          :options    => 'table 200',
         }
       end
     end
@@ -60,34 +60,34 @@ describe Puppet::Type.type(:network_route).provider(:redhat) do
   describe "when formatting" do
     let(:route1_provider) do
       stub('route1_provider',
-        :name               => '172.17.67.0/30',
-        :network            => '172.17.67.0',
-        :netmask            => '30',
-        :gateway            => '172.18.6.2',
-        :interface          => 'vlan200',
-        :additional_options => 'table 200'
+        :name       => '172.17.67.0/30',
+        :network    => '172.17.67.0',
+        :netmask    => '30',
+        :gateway    => '172.18.6.2',
+        :interface  => 'vlan200',
+        :options    => 'table 200'
       )
     end
 
     let(:route2_provider) do
       stub('lo_provider',
-        :name               => '172.28.45.0/30',
-        :network            => '172.28.45.0',
-        :netmask            => '30',
-        :gateway            => '172.18.6.2',
-        :interface          => 'eth0',
-        :additional_options => 'table 200'
+        :name       => '172.28.45.0/30',
+        :network    => '172.28.45.0',
+        :netmask    => '30',
+        :gateway    => '172.18.6.2',
+        :interface  => 'eth0',
+        :options    => 'table 200'
       )
     end
 
     let(:defaultroute_provider) do
       stub('defaultroute_provider',
-        :name               => 'default',
-        :network            => 'default',
-        :netmask            => '',
-        :gateway            => '10.0.0.1',
-        :interface          => 'eth1',
-        :additional_options => 'table 200'
+        :name       => 'default',
+        :network    => 'default',
+        :netmask    => '',
+        :gateway    => '10.0.0.1',
+        :interface  => 'eth1',
+        :options    => 'table 200'
       )
     end
 
