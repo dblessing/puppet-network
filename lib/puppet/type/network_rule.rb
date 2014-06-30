@@ -10,16 +10,9 @@ Puppet::Type.newtype(:network_rule) do
     desc "The name of the network rule"
   end
 
-  newproperty(:network) do
+  newproperty(:interface) do
     isrequired
-    desc "The target network address"
-    validate do |value|
-      begin
-        t = IPAddr.new(value) unless value == "default"
-      rescue ArgumentError
-        fail("Invalid value for network: #{value}")
-      end
-    end
+    desc "The interface to use for the rule"
   end
 
   newproperty(:selector) do
