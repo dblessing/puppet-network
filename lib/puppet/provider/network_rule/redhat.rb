@@ -41,7 +41,7 @@ Puppet::Type.type(:network_rule).provide(:redhat) do
 
       # Try to piece things back together based on value.
       new_rule[:selector] = line.split(/\s(table|prohibit|reject|unreachable|realms|goto)/)
-      line.slice!(selector).strip
+      line.slice!(new_rule[:selector]).strip
       new_rule[:action] = line
 
       rules << new_rule
