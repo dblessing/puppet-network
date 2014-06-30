@@ -44,8 +44,10 @@ Puppet::Type.type(:network_rule).provide(:redhat) do
       new_rule[:name] = "Rule #{new_rule[:selector]}"
       line.slice!(new_rule[:selector])
       new_rule[:action] = line.strip
-      new_rule[:interface] = filename
-      new_rule[:interface].slice!(/.+rule-/)
+
+      interface = filename
+      interface.slice!(/.+rule-/)
+      new_rule[:interface] = interface
 
       rules << new_rule
     end
