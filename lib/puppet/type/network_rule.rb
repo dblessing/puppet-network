@@ -45,7 +45,7 @@ Puppet::Type.newtype(:network_rule) do
       # This is basic checking. Since multiple action values can be entered
       # back-to-back, this is not fool-proof. However, it's a reasonable effort.
       value.each do |sel|
-        unless sel =~ /^(reject|prohibit|unreachable)?\s(table|realms|goto)\s/
+        unless sel =~ /^(reject|prohibit|unreachable)?\s?(table|realms|goto)\s/
           raise ArgumentError,
                 "#{self.class} action requires valid rule action " \
                 "syntax for each value in the array. See `ip rule` man " \
