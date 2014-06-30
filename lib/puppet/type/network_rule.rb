@@ -65,5 +65,6 @@ Puppet::Type.newtype(:network_rule) do
                 "pages for more information"
         end
       end
+    end
   end
 end
