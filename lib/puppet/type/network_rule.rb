@@ -38,7 +38,7 @@ Puppet::Type.newtype(:network_rule) do
     end
   end
 
-  newproperty(:action, :array_matching => :all)) do
+  newproperty(:action, :array_matching => :all) do
     isrequired
     desc "The rule action"
 
