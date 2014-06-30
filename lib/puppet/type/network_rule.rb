@@ -15,7 +15,7 @@ Puppet::Type.newtype(:network_rule) do
     desc "The interface to use for the rule"
   end
 
-  newproperty(:selector) do
+  newproperty(:selector, :array_matching => :all) do
     isrequired
     desc "The rule selector"
 
@@ -38,7 +38,7 @@ Puppet::Type.newtype(:network_rule) do
     end
   end
 
-  newproperty(:action) do
+  newproperty(:action, :array_matching => :all)) do
     isrequired
     desc "The rule action"
 
