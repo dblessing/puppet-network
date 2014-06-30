@@ -85,15 +85,9 @@ Puppet::Type.type(:network_route).provide(:redhat) do
         raise Puppet::Error, "#{provider.name} does not have a #{prop}." if provider.send(prop).nil?
       end
       if provider.network == "default"
-<<<<<<< HEAD
-        contents << "#{provider.network} via #{provider.gateway} dev #{provider.interface} #{provider.additional_options}\n"
-      else
-        contents << "#{provider.network}/#{provider.netmask} via #{provider.gateway} dev #{provider.interface} #{provider.additional_options}\n"
-=======
         contents << "#{provider.network} via #{provider.gateway} dev #{provider.interface} #{provider.options}\n"
       else
         contents << "#{provider.network}/#{provider.netmask} via #{provider.gateway} dev #{provider.interface} #{provider.options}\n"
->>>>>>> Add additional option support
       end
     end
     contents.join
