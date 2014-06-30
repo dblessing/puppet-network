@@ -44,10 +44,8 @@ Puppet::Type.type(:network_rule).provide(:redhat) do
       new_rule[:name] = "Rule #{new_rule[:selector]}"
       line.slice!(new_rule[:selector])
       new_rule[:action] = line.strip
-
-      interface = filename
-      interface.slice!(/.+rule-/)
-      new_rule[:interface] = interface
+      new_rule[:interface] = filename.dup # Because apparently filename is frozen
+      new_rule[:interface].slice!(/.+rule-/)
 
       rules << new_rule
     end
