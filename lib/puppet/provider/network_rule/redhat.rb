@@ -40,12 +40,12 @@ Puppet::Type.type(:network_rule).provide(:redhat) do
       new_rule = {}
 
       # Try to piece things back together based on value.
-      new_rule[:selector] = line.split(/\s(table|prohibit|reject|unreachable|realms|goto)/)[0]
-      new_rule[:name] = "Rule #{new_rule[:selector]}"
+      new_rule[:selector]= line.split(/\s(table|prohibit|reject|unreachable|realms|goto)/)[0]
       line.slice!(new_rule[:selector])
       new_rule[:action] = line.strip
       new_rule[:interface] = filename.dup # Because apparently filename is frozen
       new_rule[:interface].slice!(/.+rule-/)
+      new_rule[:name] = "Rule #{new_rule[:selector]} #{new_rule[:action]}"
 
       rules << new_rule
     end

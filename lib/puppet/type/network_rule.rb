@@ -1,7 +1,7 @@
 require 'ipaddr'
 
 Puppet::Type.newtype(:network_rule) do
-  @doc = "Manage non-volatile route configuration information"
+  @doc = "Manage non-volatile rule configuration information"
 
   ensurable
 
@@ -15,42 +15,33 @@ Puppet::Type.newtype(:network_rule) do
     desc "The interface to use for the rule"
   end
 
-  newproperty(:selector, :array_matching => :all) do
+  newproperty(:selector) do
     isrequired
     desc "The rule selector"
 
     validate do |value|
-      value = [ value ] unless value.is_a?(Array)
-
       # This is basic checking. Since multiple selector values can be entered
       # back-to-back, this is not fool-proof. However, it's a reasonable effort.
-      value.each do |sel|
-        unless sel =~ /^(not)?\s?(from|to|tos|fwmark|dev|pref)\s/
-          raise ArgumentError, 
-                "#{self.class} selector requires valid rule selector " \
-                "syntax for each value in the array. See `ip rule` man " \
-                "pages for more information"
-        end
+      unless value =~ /^(not)?\s?(from|to|tos|fwmark|dev|pref)\s/
+        raise ArgumentError,
+              "#{self.class} selector requires valid rule selector " \
+              "syntax. See `ip rule` man pages for more information"
       end
     end
   end
 
-  newproperty(:action, :array_matching => :all) do
+  newproperty(:action) do
     isrequired
     desc "The rule action"
 
     validate do |value|
-      value = [ value ] unless value.is_a?(Array)
 
       # This is basic checking. Since multiple action values can be entered
       # back-to-back, this is not fool-proof. However, it's a reasonable effort.
-      value.each do |sel|
-        unless sel =~ /^(reject|prohibit|unreachable)?\s?(table|realms|goto)\s/
-          raise ArgumentError,
-                "#{self.class} action requires valid rule action " \
-                "syntax for each value in the array. See `ip rule` man " \
-                "pages for more information"
-        end
+      unless value =~ /^(reject|prohibit|unreachable)?\s?(table|realms|goto)\s/
+        raise ArgumentError,
+              "#{self.class} action requires valid rule action " \
+              "syntax. See `ip rule` man pages for more information"
       end
     end
   end
